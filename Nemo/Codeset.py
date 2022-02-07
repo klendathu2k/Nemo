@@ -1,25 +1,34 @@
+from dataclasses import dataclass
 import uuid
 
+@dataclass( frozen = True )
 class Codeset:
-    def __init__(self):
-        self.unique_id   = ""
-        self.codes       = []
-        self.status      = [] # transfer status ...
-        self.destination = ""
+    name        : str
+    unique_id   : str
+    codes       : list
+    status      : list
+    source      : str
+    destination : str
 
 
 class CodesetBuilder:
     def __init__(self):
+        self.name = ""
+        self.unique_id = ""
         self.product = None
         self.codes       = []
+        self.status      = []
+        self.source      = "."
         self.destination = ""
 
 
     def build(self):
-        self.product = Codeset()
-        self.product.unique_id    = uuid.uuid4()        
-        self.product.codes        = self.codes
-        if len(self.codes) > 0:
-            self.product.status       = [ None ] * len(self.codes)
-        self.product.destination  = self.destination
+        self.product = Codeset(
+            name=self.name,
+            unique_id=str(uuid.uuid4()),
+            source=self.source,
+            destination=self.destination,
+            codes=self.codes,
+            status=[None]*len(self.codes)
+            )
         return self.product
