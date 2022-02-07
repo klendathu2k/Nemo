@@ -1,9 +1,12 @@
+from dataclasses import dataclass
+import uuid
+
+@dataclass( frozen = True )
 class Workflow:
-    shell      = "bash"
-    setup      = "" # global setup policy
-    finish     = "" # global finish policy
-    def __init__(self):
-        self.commands = []
+    name      : str
+    unique_id : str
+    shell     : str 
+    commands  : list
 
 class WorkflowBuilder:
 
@@ -12,32 +15,29 @@ class WorkflowBuilder:
         self.commands   = ""
         self.setup      = "#" 
         self.finish     = "#"
-        self.shell      = None
+        self.shell      = "bash" # Default command shell
         
     def build(self):
-        self.product = Workflow()
-        self.product.commands.append( "#!/bin/env {}".format(Workflow.shell) )
-        self.product.commands.append( Workflow.setup )
-        self.product.commands.append( self.setup )
-        count = 0
-        for line in Workflow.setup.split('\n'):
-            count = count + 1
-            self.product.commands.append(line)
-        for line in self.setup.split('\n'):
-            count = count + 1
-            self.product.commands.append(line)           
-        for line in self.commands.split('\n'):
-            count = count + 1
-            self.product.commands.append( line )
-        for line in self.finish.split('\n'):
-            count = count + 1
-            self.product.commands.append(line)
-        for line in Workflow.finish.split('\n'):
-            count = count + 1
-            self.product.commands.append(line)            
 
+        # Build the command script
+        command_shell =  "!/bin/env " + self.shell
+        command_header = """
+        #--------------------------------------------------------------------
+        # Nemo default workflow builder
+        #--------------------------------------------------------------------        
+        """
+        command_setup  = self.setup
+        command_user   = self.commands
+        command_finish = self.finish
+        command_block = '\n'.join([command_shell,command_header,command_setup,command_user,command_finish])
 
-        print("Returning a new workflow product")
+        commands = command_block.split()
+
+        self.product = Workflow(
+            name       = self.name,
+            unique_id  = str(uuid.uuid4()),
+            shell      = self.shell,
+            commands   = commands )
         
         return self.product
 
