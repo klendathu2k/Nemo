@@ -4,5 +4,8 @@ class Logset:
 
 class LogsetBuilder:
     def __init__(self):
-        pass
+        self.product = Logset()
+
+    def build(self):
+        return self.product
 
