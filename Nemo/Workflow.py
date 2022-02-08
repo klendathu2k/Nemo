@@ -10,6 +10,9 @@ class Workflow:
     commands  : list
 
     def __str__(self):
+        return self.render(method = "string")
+
+    def render(self, method ):
         myname = type(self).__name__
         width = 0
         for command in self.commands:
@@ -27,7 +30,19 @@ class Workflow:
             x.add_row([i, command])
             i = i + 1
 
-        return x.get_string()
+        result = "ERROR: method not recognized"
+        if method == "string":
+            result = x.get_string()
+        if method == "html":
+            result = x.get_html_string()
+        if method == "json":
+            result = x.get_json_string()
+        if method == "latex":
+            result = x.get_latex_string()
+        if method == "csv":
+            result = x.get_csv_string()
+
+        return result
 
 class WorkflowBuilder:
 

@@ -34,9 +34,10 @@ class Production:
     group    : str = "sPHENIX"
 
     def __str__(self):
+        return self.render(method = "string")
+
+    def render(self, method ):    
         myname = type(self).__name__
- 
-        result = ""
  
         x = PrettyTable(
             title="{myname}: {name} {id}".format(myname=myname,name=self.name,id=self.unique_id)
@@ -44,20 +45,77 @@ class Production:
  
         x.field_names = ["facility", "group", "proudction type","software release","creation date" ]
         x.add_row( [self.facility, self.group, self.genre, self.release, self.creation ] )
- 
-        result = result + x.get_string() + "\n\n"
-        for code in self.codeset:
-            result = result + str(code) + "\n\n"
-        for inset in self.inputset:
-            result = result + str(inset) + "\n\n"
-        for outset in self.outputset:
-            result = result + str(outset) + "\n\n" 
-        for logset in self.logset:
-            result = result + str(logset) + "\n\n"
-        for work in self.workflows:
-            result = result + str(work) + "\n\n" 
- 
+
+        result = "ERROR: method not recognized"
+
+        if method == "string":
+            result = result + x.get_string() + "\n\n"
+            for code in self.codeset:
+                result = result + str(code) + "\n\n"
+            for inset in self.inputset:
+                result = result + str(inset) + "\n\n"
+            for outset in self.outputset:
+                result = result + str(outset) + "\n\n" 
+            for logset in self.logset:
+                result = result + str(logset) + "\n\n"
+            for work in self.workflows:
+                result = result + str(work) + "\n\n"
+
+        if method == "html":
+            result = result + x.get_html_string() + "\n\n"
+            for code in self.codeset:
+                result = result + code.render("html") + "\n\n"
+            for inset in self.inputset:
+                result = result + inset.render("html") + "\n\n"
+            for outset in self.outputset:
+                result = result + outset.render("html") + "\n\n" 
+            for logset in self.logset:
+                result = result + logset.render("html") + "\n\n"
+            for work in self.workflows:
+                result = result + work.render("html") + "\n\n"
+
+        if method == "csv":
+            result = result + x.get_csv_string() + "\n\n"
+            for code in self.codeset:
+                result = result + code.render("csv") + "\n\n"
+            for inset in self.inputset:
+                result = result + inset.render("csv") + "\n\n"
+            for outset in self.outputset:
+                result = result + outset.render("csv") + "\n\n" 
+            for logset in self.logset:
+                result = result + logset.render("csv") + "\n\n"
+            for work in self.workflows:
+                result = result + work.render("csv") + "\n\n"
+
+        if method == "json":
+            result = result + x.get_json_string() + "\n\n"
+            for code in self.codeset:
+                result = result + code.render("json") + "\n\n"
+            for inset in self.inputset:
+                result = result + inset.render("json") + "\n\n"
+            for outset in self.outputset:
+                result = result + outset.render("json") + "\n\n" 
+            for logset in self.logset:
+                result = result + logset.render("json") + "\n\n"
+            for work in self.workflows:
+                result = result + work.render("json") + "\n\n"
+
+        if method == "latex":
+            result = result + x.get_latex_string() + "\n\n"
+            for code in self.codeset:
+                result = result + code.render("latex") + "\n\n"
+            for inset in self.inputset:
+                result = result + inset.render("latex") + "\n\n"
+            for outset in self.outputset:
+                result = result + outset.render("latex") + "\n\n" 
+            for logset in self.logset:
+                result = result + logset.render("latex") + "\n\n"
+            for work in self.workflows:
+                result = result + work.render("latex") + "\n\n"                                 
+
         return result
+ 
+
         
        
         
