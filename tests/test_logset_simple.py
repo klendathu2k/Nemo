@@ -1,8 +1,8 @@
 import glob
-from Nemo.Inputset import *
+from Nemo.Logset import *
 
-builder = InputsetBuilder()
-builder.name    = "test input set"
+builder = LogsetBuilder()
+builder.name    = "test log set"
 builder.source  = "tests/inputset/source"
 builder.destination = "/sphenix/u/jwebb2/stage_test"
 builder.files = glob.glob( builder.source + '/input*.dat' )

@@ -59,4 +59,16 @@ wfbuilder.finish = "# comment line"
 builder.SetWorkflowBuilder( wfbuilder )
 
 product = builder.build()
-print(product)
+
+print("Print as string")
+print(str(product))
+
+print("Render as HTML")
+print( product.render("html") )
+print ("Render as JSON")
+print( product.render("json") )
+print( "Render as csv" )
+print( product.render("csv") )
+print( "Render as YAML" )
+print( product.render("yaml") )
+
