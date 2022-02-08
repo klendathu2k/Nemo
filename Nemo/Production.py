@@ -2,6 +2,7 @@ import sys
 import datetime
 import uuid
 from dataclasses import dataclass
+from prettytable import PrettyTable
 
 @dataclass( frozen = True )
 class Production:
@@ -30,8 +31,35 @@ class Production:
     workflows          : list    # one or more sets of workflows to be executed in this production
 
     facility : str = "RHIC" 
-    group    : str = "sPHENIX" 
-    
+    group    : str = "sPHENIX"
+
+    def __str__(self):
+        myname = type(self).__name__
+ 
+        result = ""
+ 
+        x = PrettyTable(
+            title="{myname}: {name} {id}".format(myname=myname,name=self.name,id=self.unique_id)
+            )
+ 
+        x.field_names = ["facility", "group", "proudction type","software release","creation date" ]
+        x.add_row( [self.facility, self.group, self.genre, self.release, self.creation ] )
+ 
+        result = result + x.get_string() + "\n\n"
+        for code in self.codeset:
+            result = result + str(code) + "\n\n"
+        for inset in self.inputset:
+            result = result + str(inset) + "\n\n"
+        for outset in self.outputset:
+            result = result + str(outset) + "\n\n" 
+        for logset in self.logset:
+            result = result + str(logset) + "\n\n"
+        for work in self.workflows:
+            result = result + str(work) + "\n\n" 
+ 
+        return result
+        
+       
         
 class ProductionBuilder:
 
