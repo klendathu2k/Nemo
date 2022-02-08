@@ -49,7 +49,7 @@ class Production:
         result = "ERROR: method not recognized"
 
         if method == "string":
-            result = result + x.get_string() + "\n\n"
+            result = x.get_string() + "\n\n"
             for code in self.codeset:
                 result = result + str(code) + "\n\n"
             for inset in self.inputset:
@@ -62,7 +62,7 @@ class Production:
                 result = result + str(work) + "\n\n"
 
         if method == "html":
-            result = result + x.get_html_string() + "\n\n"
+            result = x.get_html_string() + "\n\n"
             for code in self.codeset:
                 result = result + code.render("html") + "\n\n"
             for inset in self.inputset:
@@ -75,7 +75,7 @@ class Production:
                 result = result + work.render("html") + "\n\n"
 
         if method == "csv":
-            result = result + x.get_csv_string() + "\n\n"
+            result = x.get_csv_string() + "\n\n"
             for code in self.codeset:
                 result = result + code.render("csv") + "\n\n"
             for inset in self.inputset:
@@ -88,7 +88,7 @@ class Production:
                 result = result + work.render("csv") + "\n\n"
 
         if method == "json":
-            result = result + x.get_json_string() + "\n\n"
+            result = x.get_json_string() + "\n\n"
             for code in self.codeset:
                 result = result + code.render("json") + "\n\n"
             for inset in self.inputset:
@@ -101,7 +101,7 @@ class Production:
                 result = result + work.render("json") + "\n\n"
 
         if method == "latex":
-            result = result + x.get_latex_string() + "\n\n"
+            result = x.get_latex_string() + "\n\n"
             for code in self.codeset:
                 result = result + code.render("latex") + "\n\n"
             for inset in self.inputset:
